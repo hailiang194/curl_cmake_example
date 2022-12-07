@@ -28,7 +28,7 @@
 #include <stdio.h>
 #include <curl/curl.h>
 
-int main(void)
+int main(int argc, char *argv[])
 {
   CURL *curl;
   CURLcode res;
@@ -36,8 +36,9 @@ int main(void)
   curl_global_init(CURL_GLOBAL_DEFAULT);
 
   curl = curl_easy_init();
-  if(curl) {
-    curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:8000/secondscreen/latest");
+  if (curl)
+  {
+    curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
 
 #ifdef SKIP_PEER_VERIFICATION
     /*
@@ -66,7 +67,7 @@ int main(void)
     /* Perform the request, res will get the return code */
     res = curl_easy_perform(curl);
     /* Check for errors */
-    if(res != CURLE_OK)
+    if (res != CURLE_OK)
       fprintf(stderr, "curl_easy_perform() failed: %s\n",
               curl_easy_strerror(res));
 
